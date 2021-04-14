@@ -1,10 +1,12 @@
 // import logo from './logo.svg';
-import './App.css';
+import './styles';
 import Baitap1 from './Baitap1';
+import BaitapBugger from './BaitapBugger';
 
 function App() {
   return (
-   <Baitap1 />
+  //  <Baitap1 />
+  <BaitapBugger />
   );
 }
 

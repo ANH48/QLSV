@@ -2,7 +2,7 @@ import React from 'react'
 
 import {useSelector,useDispatch} from "react-redux"
 
-import {addBreadmid,reduceBreadmid} from '../actions/buggerActions'
+import {addBreadmid,reduceBreadmid,changeBreadmid} from '../actions/buggerActions'
 
 
 export default function BaitapBugger({children}) {
@@ -21,12 +21,13 @@ export default function BaitapBugger({children}) {
     }
 
     const handleBreadMid = (propMenu,status) => {
-        if(status) {
-            dispatch(addBreadmid(propMenu));
-        }
-        else {
-            dispatch(reduceBreadmid(propMenu));
-        }
+        // if(status) {
+        //     dispatch(addBreadmid(propMenu));
+        // }
+        // else {
+        //     dispatch(reduceBreadmid(propMenu));
+        // }
+        dispatch(changeBreadmid(propMenu,status));
     }
 
     const renderMenu = () => {
@@ -34,6 +35,11 @@ export default function BaitapBugger({children}) {
             return <tr key={index}>
                 <td>{propMenu}</td>
                 <td>
+                    {/* Cách 1
+                    <button className="btn btn-success mr-2" onClick={() =>handleBreadMid(propMenu,true)}>+</button> 
+                    {burger[propMenu]}
+                    <button className="btn btn-danger ml-2" onClick={() =>handleBreadMid(propMenu,false)} >-</button> */}
+
                     <button className="btn btn-success mr-2" onClick={() =>handleBreadMid(propMenu,true)}>+</button> 
                     {burger[propMenu]}
                     <button className="btn btn-danger ml-2" onClick={() =>handleBreadMid(propMenu,false)} >-</button>

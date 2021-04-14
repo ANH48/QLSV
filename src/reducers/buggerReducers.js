@@ -1,4 +1,5 @@
 import {ADD_BREADMID,REDUCE_BREADMID} from '../constants/buggerConstants';
+import {CHANGE_BREADMID} from '../constants/buggerConstants';
  
  const initialState = {
 
@@ -20,24 +21,43 @@ import {ADD_BREADMID,REDUCE_BREADMID} from '../constants/buggerConstants';
 
 function buggerReducer (state = initialState, action)  {
     switch (action.type) {
-        case ADD_BREADMID:
-                    let  burgerUpdate= {...state.burger};
-                    burgerUpdate[action.payload.propMenu] += 1;
-                    state.burger = burgerUpdate;
+        // case ADD_BREADMID:
+        //             let  burgerUpdate= {...state.burger};
+        //             burgerUpdate[action.payload.propMenu] += 1;
+        //             state.burger = burgerUpdate;
 
-                     state.total += 1 * state.menu[action.payload.propMenu];
-                    return {...state};
-        case REDUCE_BREADMID:
-                    let burgerUpdate2= {...state.burger};
-                    if(burgerUpdate2[action.payload.propMenu] === 0) {
+        //              state.total += 1 * state.menu[action.payload.propMenu];
+        //             return {...state};
+        // case REDUCE_BREADMID:
+        //             let burgerUpdate2= {...state.burger};
+        //             if(burgerUpdate2[action.payload.propMenu] === 0) {
+        //                 return {...state};
+        //             }
+        //             else {
+        //                 burgerUpdate2[action.payload.propMenu] -= 1;
+        //                 state.burger = burgerUpdate2;
+        //                 state.total -= state.menu[action.payload.propMenu] * 1;
+        //                 return {...state};
+        //             }
+        case CHANGE_BREADMID:
+                    let  burgerUpdate= {...state.burger};
+                    if(action.payload.status){
+                        burgerUpdate[action.payload.propMenu] += 1;
+                        state.burger = burgerUpdate;
+                        state.total += 1 * state.menu[action.payload.propMenu];
                         return {...state};
                     }
-                    else {
-                        burgerUpdate2[action.payload.propMenu] -= 1;
-                        state.burger = burgerUpdate2;
-                        state.total -= state.menu[action.payload.propMenu] * 1;
-                        return {...state};
+                    else{
+                        if(burgerUpdate[action.payload.propMenu] === 0) {return {...state};}
+                        else {
+                            burgerUpdate[action.payload.propMenu] -= 1;
+                            state.burger = burgerUpdate;
+                            state.total -= state.menu[action.payload.propMenu] * 1;
+                            return {...state};
+                        }
                     }
+                    
+                   
         default:
             return state;
     }

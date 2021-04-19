@@ -12,12 +12,13 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import UserForm from "./UserForm";
 
 export default function Home() {
   const dispatch = useDispatch();
 
   //   const { id } = useParams();
-  const { users, selectedUser, isLoading, error } = useSelector(
+  const { users, selectedUser,isOpen, isLoading, error } = useSelector(
     (state) => state.users
   );
 
@@ -27,47 +28,19 @@ export default function Home() {
     dispatch(getUsers());
   }, []);
   // dispatch(getSinhviens());
-
   const handleDetail = (id) => {
     dispatch(getUserById(id));
   };
   useEffect(() => {
     // dispatch action api lấy dskh
-     renderpopup(selectedUser);
+    //  renderpopup(selectedUser);
   }, [selectedUser]);
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
-
-  const renderpopup = (user) => {
-    return (
-      <div>
-        <Modal isOpen="true" toggle="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content  w-100">
-              <ModalHeader>User Form</ModalHeader>
-              <ModalBody>
-                <FormGroup>
-                  <Label for="Username">Username</Label>
-                  <Input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={user.username}
-                  />
-                  {/* <small id="helpId" className="text-muted">Help text</small> */}
-                </FormGroup>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="secondary">Cancel</Button>
-                <Button color="primary">Submit</Button>
-              </ModalFooter>
-            </div>
-          </div>
-        </Modal>
-      </div>
-    );
-  };
+ 
+//   const renderpopup = (user) => {
+//     return (
+     
+//     );
+//   };
 
   const renderUsers = () => {
     // return sinhviens;
@@ -93,7 +66,14 @@ export default function Home() {
   return (
     <div>
       <h1>Đây là trang home của quản lí sinh viên</h1>
-      <div className="container">{renderUsers()}</div>
+      <div className="container">
+          {renderUsers()}
+          <UserForm 
+             user = {selectedUser}
+             isOpen = {isOpen}
+          />
+        </div>
+      
 
       
     </div>

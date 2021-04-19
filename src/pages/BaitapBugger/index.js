@@ -2,7 +2,7 @@ import React from 'react'
 
 import {useSelector,useDispatch} from "react-redux"
 
-import {addBreadmid,reduceBreadmid,changeBreadmid} from '../actions/buggerActions'
+import {addBreadmid,reduceBreadmid,changeBreadmid} from '../../actions/buggerActions'
 
 
 export default function BaitapBugger({children}) {

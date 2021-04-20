@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUserById } from "../../../actions/users";
+import { getUsers, getUserById,changeIsOpen } from "../../../actions/users";
 import {
   Button,
   Modal,
@@ -31,17 +31,20 @@ export default function Home() {
   const handleDetail = (id) => {
     dispatch(getUserById(id));
   };
-  useEffect(() => {
-    // dispatch action api lấy dskh
-    //  renderpopup(selectedUser);
-  }, [selectedUser]);
+  // useEffect(() => {
+  //   // dispatch action api lấy dskh
+  //   //  renderpopup(selectedUser);
+  // }, [selectedUser]);
  
 //   const renderpopup = (user) => {
 //     return (
      
 //     );
 //   };
-
+const handeToggleModal = () => {
+  dispatch(changeIsOpen(isOpen))
+  // console.log("dispatch", isOpen);
+}
   const renderUsers = () => {
     // return sinhviens;
     return users.map((user, index) => {
@@ -62,7 +65,7 @@ export default function Home() {
       );
     });
   };
-
+ 
   return (
     <div>
       <h1>Đây là trang home của quản lí sinh viên</h1>
@@ -71,6 +74,7 @@ export default function Home() {
           <UserForm 
              user = {selectedUser}
              isOpen = {isOpen}
+             onToggle = {() => handeToggleModal(isOpen)}
           />
         </div>
       

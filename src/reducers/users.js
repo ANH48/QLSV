@@ -1,7 +1,7 @@
 // Sinhvien reducer 
 import {GET_USERS_REQUEST,GET_USERS_SUCCESS,GET_USERS_FAILURE} from '../constants/usersConstants';
 
-import {GET_USERSBYID_REQUEST,GET_USERSBYID_SUCCESS,GET_USERSBYID_FAILURE} from '../constants/usersConstants';
+import {GET_USERSBYID_REQUEST,GET_USERSBYID_SUCCESS,GET_USERSBYID_FAILURE,CHANGEISOPEN} from '../constants/usersConstants';
 
 const initialState = {
     users: [],
@@ -33,6 +33,10 @@ function users(state= initialState, action) {
             return{...state,isLoading: false,isOpen: false, error: action.payload.error}
         }
 
+        // CHANGEISOPEN
+        case CHANGEISOPEN: {
+            return{...state,isOpen: !action.payload.isOpen}
+        }
         default:
             return state;
     }

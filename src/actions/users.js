@@ -1,5 +1,5 @@
 import {GET_USERS_REQUEST,GET_USERS_SUCCESS,GET_USERS_FAILURE} from '../constants/usersConstants';
-import {GET_USERSBYID_REQUEST,GET_USERSBYID_SUCCESS,GET_USERSBYID_FAILURE} from '../constants/usersConstants';
+import {GET_USERSBYID_REQUEST,GET_USERSBYID_SUCCESS,GET_USERSBYID_FAILURE,CHANGEISOPEN} from '../constants/usersConstants';
 
 import usersAPI from '../services/usersAPI'
 export function getUserById(id){
@@ -36,3 +36,12 @@ export function getUsers(){
         }
     }
 }
+export function changeIsOpen(isOpen){
+    return {
+        type: CHANGEISOPEN,
+        payload: {
+            isOpen,
+        },
+    };
+}
+

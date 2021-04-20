@@ -6,12 +6,12 @@ const usersAPI = {
     },
 
     getUserById: (id) => {
-        const params = {
-            id,
-            // maNhom: "GP01",
-        };
+        // const params = {
+        //     id,
+        //     // maNhom: "GP01",
+        // };
         // return axiosClient.get(`/QuanLyKhoaHoc/LayDanhMucKhoaHoc?maDanhuc=${category}`);
-        return axiosClient.get("/user/",{params});
+        return axiosClient.get(`/user/${id}`);
     }
 };
 

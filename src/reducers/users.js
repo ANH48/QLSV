@@ -5,7 +5,7 @@ import {GET_USERSBYID_REQUEST,GET_USERSBYID_SUCCESS,GET_USERSBYID_FAILURE,CHANGE
 
 const initialState = {
     users: [],
-    selectedUser: [],
+    selectedUser: {},
     isOpen: false,
     isLoading: false,
     error: null,

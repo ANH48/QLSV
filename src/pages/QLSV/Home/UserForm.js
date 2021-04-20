@@ -29,7 +29,7 @@ export default function UserForm({ user, isOpen, onToggle }) {
       .min(3, "Mật Khẩu  phải từ 3 đến 20 kí tự")
       .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
   });
-
+ 
   const {
     register,
     handleSubmit,
@@ -49,7 +49,7 @@ export default function UserForm({ user, isOpen, onToggle }) {
   
   const [vaLues, setValue] = useState({
       taiKhoan: '',
-      email: '',
+      email:'',
     });
 
   
@@ -66,7 +66,7 @@ export default function UserForm({ user, isOpen, onToggle }) {
        console.log(vaLues);
     }, [vaLues])
 
- 
+    console.log("render");
   if (!isEmpty(user)) { 
  
     return (

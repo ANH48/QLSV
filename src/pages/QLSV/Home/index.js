@@ -26,15 +26,13 @@ export default function Home() {
   useEffect(() => {
     // dispatch action api lấy dskh
     dispatch(getUsers());
+    console.log("renderr useer")
   }, []);
   // dispatch(getSinhviens());
   const handleDetail = (id) => {
     dispatch(getUserById(id));
   };
-  // useEffect(() => {
-  //   // dispatch action api lấy dskh
-  //   //  renderpopup(selectedUser);
-  // }, [selectedUser]);
+
  
 //   const renderpopup = (user) => {
 //     return (

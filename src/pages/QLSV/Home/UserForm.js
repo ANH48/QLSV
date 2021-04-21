@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -28,11 +28,35 @@ export default function UserForm({ user, isOpen, onToggle }) {
       .required("Email không được để trống")
       .min(3, "Mật Khẩu  phải từ 3 đến 20 kí tự")
       .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
+    phone: yup
+    .string()
+    .required("Phone không được để trống")
+    .min(10, "Số điện thoại không đúng !!!")
+    .max(11, "Số điện thoại không đúng !!!"),
+    fullname: yup
+    .string()
+    .required("Họ Tên không được để trống")
+    .min(5, "Họ Tên phải từ 5 đến 20 kí tự")
+    .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
+    address: yup
+    .string()
+    .required("Địa chỉ không được để trống"),
+    score: yup
+    .number()
+    .required("Điểm trung bình không được để trống")
+    .min(0, "Điểm trung bình  phải từ 0 đến 10")
+    .max(10, "Điểm trung bình phải từ 0 đến 10"),
+    scope: yup
+    .string()
+    .required("Chức vụ không được để trống")
+    .min(2, "Mật Khẩu  phải từ 3 đến 20 kí tự")
+    .max(2, "Mật Khẩu phải từ 3 đến 20 kí tự"),
   });
- 
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     // Sử dụng Khi UI coponent không load
     control,
@@ -45,30 +69,45 @@ export default function UserForm({ user, isOpen, onToggle }) {
   const onSubmit = (values) => {
     console.log(values);
   };
-  
-  
-  const [vaLues, setValue] = useState({
-      taiKhoan: '',
-      email:'',
-    });
 
-  
-  
-  const handleChange = (evt) => {
-    const {value , name} = evt.target;
-    setValue((vaLues) => ({
-        ...vaLues,
-        [name]: value,
-    }));
+  var initialValue = {};
+  if (!isEmpty(user)) {
+    initialValue = {
+      taiKhoan: user.username,
+      email: user.email,
+      phone: user.phone,
+      fullname: user.fullname,
+      address: user.address,
+      score: user.score,
+      scope: user.scope,
     };
+  } else {
+    initialValue = {
+      taiKhoan: "",
+      email: "",
+      phone:  "",
+      fullname:  "",
+      address:  "",
+      score:  "",
+      scope: "",
+    };
+  }
 
-    useEffect(() => {
-       console.log(vaLues);
-    }, [vaLues])
+  const [vaLues, setValues] = useState(initialValue);
 
-    console.log("render");
-  if (!isEmpty(user)) { 
- 
+  const handleChange = (evt) => {
+    const { value, name } = evt.target;
+    setValues((vaLues) => ({
+      ...vaLues,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    setValues(initialValue);
+  }, [user]);
+
+  if (!isEmpty(user)) {
     return (
       <div>
         <Modal isOpen={isOpen} toggle={() => onToggle(isOpen)}>
@@ -80,12 +119,12 @@ export default function UserForm({ user, isOpen, onToggle }) {
                   <FormGroup>
                     <Label for="username">Username</Label>
                     <Input
-                         type="text" 
-                         {...register("taiKhoan")} 
-                         value={vaLues.taiKhoan}
-                         onChange={handleChange}
-                        
-                         />
+                      type="text"
+                      {...register("taiKhoan")}
+                      value={vaLues.taiKhoan}
+                      onChange={handleChange}
+                      {...setValue("taiKhoan", vaLues.taiKhoan)}
+                    />
                     {errors.taiKhoan && (
                       <div className="alert alert-danger">
                         {errors.taiKhoan.message}
@@ -96,22 +135,81 @@ export default function UserForm({ user, isOpen, onToggle }) {
                       type="text"
                       {...register("email")}
                       value={vaLues.email}
-                         onChange={handleChange}
-                    
+                      onChange={handleChange}
+                      {...setValue("email", vaLues.email)}
                     />
                     {errors.email && (
                       <div className="alert alert-danger">
                         {errors.email.message}
                       </div>
                     )}
+                    <Label for="phone">Number phone</Label>
+                    <Input
+                      type="text"
+                      {...register("phone")}
+                      value={vaLues.phone}
+                      onChange={handleChange}
+                      {...setValue("phone", vaLues.phone)}
+                    />
+                    {errors.phone && (
+                      <div className="alert alert-danger">
+                        {errors.phone.message}
+                      </div>
+                    )}
+                    <Label for="fullname">Họ Tên</Label>
+                    <Input
+                      type="text"
+                      {...register("fullname")}
+                      value={vaLues.fullname}
+                      onChange={handleChange}
+                      {...setValue("fullname", vaLues.fullname)}
+                    />
+                    {errors.fullname && (
+                      <div className="alert alert-danger">
+                        {errors.fullname.message}
+                      </div>
+                    )}
 
-                    <p>{user.username}</p>
-                    <p>{user.email}</p>
-                    <p>{user.phone}</p>
-                    <p>{user.fullname}</p>
-                    <p>{user.address}</p>
-                    <p>{user.score}</p>
-                    <p>{user.scope}</p>
+                    <Label for="address">Họ Tên</Label>
+                    <Input
+                      type="text"
+                      {...register("address")}
+                      value={vaLues.address}
+                      onChange={handleChange}
+                      {...setValue("address", vaLues.address)}
+                    />
+                    {errors.address && (
+                      <div className="alert alert-danger">
+                        {errors.address.message}
+                      </div>
+                    )}
+
+                    <Label for="score">Điểm TB</Label>
+                    <Input
+                      type="text"
+                      {...register("score")}
+                      value={vaLues.score}
+                      onChange={handleChange}
+                      {...setValue("score", vaLues.score)}
+                    />
+                    {errors.score && (
+                      <div className="alert alert-danger">
+                        {errors.score.message}
+                      </div>
+                    )}
+                    <Label for="scope">Chức vụ: </Label>
+                    <Input
+                      type="text"
+                      {...register("scope")}
+                      value={vaLues.scope}
+                      onChange={handleChange}
+                      {...setValue("scope", vaLues.scope)}
+                    />
+                    {errors.scope && (
+                      <div className="alert alert-danger">
+                        {errors.scope.message}
+                      </div>
+                    )}
                     {/* <small id="helpId" className="text-muted">Help text</small> */}
                   </FormGroup>
                 </ModalBody>
@@ -129,6 +227,6 @@ export default function UserForm({ user, isOpen, onToggle }) {
       </div>
     );
   } else {
-    return <div></div>;
+    return <></>;
   }
 }

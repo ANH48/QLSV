@@ -12,7 +12,12 @@ const usersAPI = {
         // };
         // return axiosClient.get(`/QuanLyKhoaHoc/LayDanhMucKhoaHoc?maDanhuc=${category}`);
         return axiosClient.get(`/user/${id}`);
-    }
+    },
+
+    updateUserById: (data) => {
+        return axiosClient.put(`/user/${data.id}`,data);
+    },
+
 };
 
 export default usersAPI;

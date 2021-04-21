@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-export default function UserForm({ user, isOpen, onToggle }) {
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
   // Tạo schema validation
   const schema = yup.object().shape({
     taiKhoan: yup
@@ -25,32 +25,32 @@ export default function UserForm({ user, isOpen, onToggle }) {
       .max(20, "Tài khoản phải từ 5 đến 20 kí tự"),
     email: yup
       .string()
+      .email("Vui lòng điền đầy đủ eamil")
       .required("Email không được để trống")
       .min(3, "Mật Khẩu  phải từ 3 đến 20 kí tự")
       .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
     phone: yup
-    .string()
-    .required("Phone không được để trống")
-    .min(10, "Số điện thoại không đúng !!!")
-    .max(11, "Số điện thoại không đúng !!!"),
+      .string()
+      .matches(phoneRegExp, "Số điện thoại không đúng")
+      .min(10, "Số điện thoại không đúng")
+      .max(11, "Số điện thoại không đúng")
+      .required("Phone không được để trống"),
     fullname: yup
-    .string()
-    .required("Họ Tên không được để trống")
-    .min(5, "Họ Tên phải từ 5 đến 20 kí tự")
-    .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
-    address: yup
-    .string()
-    .required("Địa chỉ không được để trống"),
+      .string()
+      .required("Họ Tên không được để trống")
+      .min(5, "Họ Tên phải từ 5 đến 20 kí tự")
+      .max(20, "Mật Khẩu phải từ 3 đến 20 kí tự"),
+    address: yup.string().required("Địa chỉ không được để trống"),
     score: yup
-    .number()
-    .required("Điểm trung bình không được để trống")
-    .min(0, "Điểm trung bình  phải từ 0 đến 10")
-    .max(10, "Điểm trung bình phải từ 0 đến 10"),
+      .number()
+      .required("Điểm trung bình không được để trống")
+      .min(0, "Điểm trung bình  phải từ 0 đến 10")
+      .max(10, "Điểm trung bình phải từ 0 đến 10"),
     scope: yup
-    .string()
-    .required("Chức vụ không được để trống")
-    .min(2, "Mật Khẩu  phải từ 3 đến 20 kí tự")
-    .max(2, "Mật Khẩu phải từ 3 đến 20 kí tự"),
+      .string()
+      .required("Chức vụ không được để trống")
+      .min(2, "Mật Khẩu  phải từ 3 đến 20 kí tự")
+      .max(2, "Mật Khẩu phải từ 3 đến 20 kí tự"),
   });
 
   const {
@@ -66,13 +66,12 @@ export default function UserForm({ user, isOpen, onToggle }) {
   const isEmpty = (v) => {
     return Object.keys(v).length === 0;
   };
-  const onSubmit = (values) => {
-    console.log(values);
-  };
+
 
   var initialValue = {};
   if (!isEmpty(user)) {
     initialValue = {
+      id: user.id,
       taiKhoan: user.username,
       email: user.email,
       phone: user.phone,
@@ -83,16 +82,24 @@ export default function UserForm({ user, isOpen, onToggle }) {
     };
   } else {
     initialValue = {
+      id: "",
       taiKhoan: "",
       email: "",
-      phone:  "",
-      fullname:  "",
-      address:  "",
-      score:  "",
+      phone: "",
+      fullname: "",
+      address: "",
+      score: "",
       scope: "",
     };
   }
-
+  const onSubmit = (values) => {
+    const { value, name } = values;
+    setValues((vaLues) => ({
+      ...vaLues,
+      [name]: value,
+    }));
+    onUpdateUser(initialValue);
+  };
   const [vaLues, setValues] = useState(initialValue);
 
   const handleChange = (evt) => {

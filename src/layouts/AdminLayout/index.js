@@ -10,7 +10,7 @@ export default function AdminLayout({children}) {
                     <ul>
                         <li> <Link to="/admin/sinhvien">Danh Sách học viên</Link></li>
                         <li><Link to="/admin/themsinhvien">Thêm Sinh Viên</Link></li>
-                        <li></li>
+                        <li><Link to="/admin/tintuc">Quản Lí tin tức</Link></li>
                     </ul>
                 </div>
                 <div className="w-75">

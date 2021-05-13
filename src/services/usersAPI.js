@@ -14,9 +14,18 @@ const usersAPI = {
         return axiosClient.get(`/user/${id}`);
     },
 
-    updateUserById: (data) => {
-        return axiosClient.put(`/user/${data.id}`,data);
+    updateUserById: (data,id) => {
+        // console.log(data);
+        return axiosClient.put(`/user/${id}`,data);
     },
+
+    deleteUser: (id) => {
+        return axiosClient.delete(`/user/${id}`);
+    },
+
+    addUser: (data) => {
+        return axiosClient.post(`/user`,data);
+    }
 
 };
 

@@ -9,6 +9,7 @@ import {lazy,Suspense} from 'react'
 import AdminLayout from "./layouts/AdminLayout";
 
 import Home from './pages/QLSV/Home';
+import New from './pages/QLSV/News';
 
 // Sử dụng lazy load : không import trực tiếp 
 // const Home = lazy(() => import("./pages/QLSV/Home"));
@@ -34,6 +35,9 @@ function App() {
                   </Route>
                   <Route path="/admin/themsinhvien">
                       <ThemSV />
+                  </Route>
+                  <Route path="/admin/tintuc">
+                      <New />
                   </Route>
               </Switch>
           </AdminLayout>

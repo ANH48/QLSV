@@ -7,9 +7,15 @@ import {
     GET_USERSBYID_SUCCESS,
     GET_USERSBYID_FAILURE,
     CHANGEISOPEN,
-    GET_USERUPDATE_REQUEST,
-    GET_USERUPDATE_SUCCESS,
-    GET_USERUPDATE_FAILURE,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAILURE,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAILURE,
+    ADD_USER_REQUEST,
+    ADD_USER_SUCCESS,
+    ADD_USER_FAILURE,
   } from "../constants/usersConstants";
 
 const initialState = {
@@ -18,6 +24,7 @@ const initialState = {
     isOpen: false,
     isLoading: false,
     error: null,
+    result: [],
 }
 
 function users(state= initialState, action) {
@@ -48,16 +55,37 @@ function users(state= initialState, action) {
         }
 
         // UPDATE USER 
-        case GET_USERUPDATE_REQUEST: {
+        case UPDATE_USER_REQUEST: {
             return{...state, isLoading: true,isOpen: false, error: null}
         }
-        case GET_USERUPDATE_SUCCESS: {
-            return{...state,isOpen: false, isLoading: false}
+        case UPDATE_USER_SUCCESS: {
+            return{...state,result: action.payload.result,isOpen: false, isLoading: false}
         }
-        case GET_USERUPDATE_FAILURE: {
+        case UPDATE_USER_FAILURE: {
             return{...state,isLoading: false,isOpen: false, error: action.payload.error}
         }
 
+        // DELETE USER
+        case DELETE_USER_REQUEST: {
+            return{...state, isLoading: true,isOpen: false, error: null}
+        }
+        case DELETE_USER_SUCCESS: {
+            return{...state,result: action.payload.result,isOpen: false,isLoading: false}
+        }
+        case DELETE_USER_FAILURE: {
+            return{...state,isLoading: false,isOpen: false, error: action.payload.error}
+        }
+
+        // ADD USER
+        case ADD_USER_REQUEST: {
+            return{...state, isLoading: true,isOpen: false, error: null}
+        }
+        case ADD_USER_SUCCESS: {
+            return{...state,result: action.payload.result,isOpen: false,isLoading: false}
+        }
+        case ADD_USER_FAILURE: {
+            return{...state,isLoading: false,isOpen: false, error: action.payload.error}
+        }
         default:
             return state;
     }

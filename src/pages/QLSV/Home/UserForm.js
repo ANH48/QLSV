@@ -10,7 +10,6 @@ import {
   Input,
   Form,
 } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -18,7 +17,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
   // Tạo schema validation
   const schema = yup.object().shape({
-    taiKhoan: yup
+    username: yup
       .string()
       .required("Tài khoản không được để trống")
       .min(5, "Tài khoản phải từ 5 đến 20 kí tự")
@@ -72,7 +71,7 @@ export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
   if (!isEmpty(user)) {
     initialValue = {
       id: user.id,
-      taiKhoan: user.username,
+      username: user.username,
       email: user.email,
       phone: user.phone,
       fullname: user.fullname,
@@ -83,7 +82,7 @@ export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
   } else {
     initialValue = {
       id: "",
-      taiKhoan: "",
+      username: "",
       email: "",
       phone: "",
       fullname: "",
@@ -93,12 +92,7 @@ export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
     };
   }
   const onSubmit = (values) => {
-    const { value, name } = values;
-    setValues((vaLues) => ({
-      ...vaLues,
-      [name]: value,
-    }));
-    onUpdateUser(initialValue);
+    onUpdateUser(values,user.id);
   };
   const [vaLues, setValues] = useState(initialValue);
 
@@ -127,14 +121,14 @@ export default function UserForm({ user, isOpen, onToggle, onUpdateUser }) {
                     <Label for="username">Username</Label>
                     <Input
                       type="text"
-                      {...register("taiKhoan")}
-                      value={vaLues.taiKhoan}
+                      {...register("username")}
+                      value={vaLues.username}
                       onChange={handleChange}
-                      {...setValue("taiKhoan", vaLues.taiKhoan)}
+                      {...setValue("username", vaLues.username)}
                     />
-                    {errors.taiKhoan && (
+                    {errors.username && (
                       <div className="alert alert-danger">
-                        {errors.taiKhoan.message}
+                        {errors.username.message}
                       </div>
                     )}
                     <Label for="email">Email</Label>

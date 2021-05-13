@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUserById,changeIsOpen,updateUserById } from "../../../actions/users";
+import {
+  getUsers,
+  getUserById,
+  changeIsOpen,
+  updateUserById,
+  deleteUser,
+} from "../../../actions/users";
 import {
   Button,
   Modal,
@@ -18,35 +24,48 @@ export default function Home() {
   const dispatch = useDispatch();
 
   //   const { id } = useParams();
-  const { users, selectedUser,isOpen,isLoading, error } = useSelector(
+  const { users, selectedUser, isOpen, result, isLoading, error } = useSelector(
     (state) => state.users
   );
-
+  
   //   const i = 0;
   useEffect(() => {
     // dispatch action api lấy dskh
     dispatch(getUsers());
-    console.log("renderr useer")
-  }, []);
+    if (result.length != 0) {
+      let method = (result.config.method === "delete")? "Xoá" : "Cập Nhật";
+      if (result.status === 200) {
+        alert(method+" thành công");
+      } else {
+        alert(method+ " thất bại");
+      }
+    }
+  }, [result]);
   // dispatch(getSinhviens());
-  const handleDetail = (id) => {
-    dispatch(getUserById(id));
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id));
+    // console.log();
   };
 
- 
-//   const renderpopup = (user) => {
-//     return (
-     
-//     );
-//   };
-const handeToggleModal = () => {
-  dispatch(changeIsOpen(isOpen))
-  // console.log("dispatch", isOpen);
-}
+  const handleDetail = (id) => {
+    dispatch(getUserById(id));
 
-const handleUpdateUser = (user) => {
-  dispatch(updateUserById(user))
-}
+  };
+
+  //   const renderpopup = (user) => {
+  //     return (
+
+  //     );
+  //   };
+  const handeToggleModal = () => {
+    dispatch(changeIsOpen(isOpen));
+    // console.log("dispatch", isOpen);
+  };
+
+  const handleUpdateUser = (user, id) => {
+    dispatch(updateUserById(user, id));
+   
+  };
   const renderUsers = () => {
     // return sinhviens;
     return users.map((user, index) => {
@@ -61,28 +80,30 @@ const handleUpdateUser = (user) => {
             >
               Chi Tiết
             </Button>
-            <Button color="btn btn-danger">Xoá</Button>
+            <Button
+              onClick={() => handleDelete(user.id)}
+              color="btn btn-danger"
+            >
+              Xoá
+            </Button>
           </div>
         </div>
       );
     });
   };
- 
+
   return (
     <div>
       <h1>Đây là trang home của quản lí sinh viên</h1>
       <div className="container">
-          {renderUsers()}
-          <UserForm 
-             user = {selectedUser}
-             isOpen = {isOpen}
-             onToggle = {() => handeToggleModal(isOpen)}
-             onUpdateUser = {handleUpdateUser}
-          />
-        </div>
-      
-
-      
+        {renderUsers()}
+        <UserForm
+          user={selectedUser}
+          isOpen={isOpen}
+          onToggle={() => handeToggleModal(isOpen)}
+          onUpdateUser={handleUpdateUser}
+        />
+      </div>
     </div>
   );
 }
